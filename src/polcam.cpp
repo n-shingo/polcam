@@ -55,29 +55,29 @@ int main( int argc, char *argv[] )
         // Get image
         Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
 
-        // ‰‰ñƒ‹[ƒv‚Ì‚É‚¾‚¯C‰æ‘œƒTƒCƒY‚ğ•\¦
+        // åˆå›ãƒ«ãƒ¼ãƒ—ã®æ™‚ã«ã ã‘ï¼Œç”»åƒã‚µã‚¤ã‚ºã‚’è¡¨ç¤º
         if (first) {
             size_t width = pImage->GetWidth();
             size_t height = pImage->GetHeight();
             std::cout << TAB1 << "Original Raw Image Size: " << width << "x" << height << std::endl;
         }
 
-        // Œ´‰æ‘œ‚ğOpenCV‚ÌMat‚É•ÏŠ·
+        // åŸç”»åƒã‚’OpenCVã®Matã«å¤‰æ›
         cv::Mat orgImg;
         GetMatFromIImage(pImage, orgImg);
 
-        // Ÿ‚Ì‰æ‘œæ“¾‚½‚ß‚Ì€”õ
+        // æ¬¡ã®ç”»åƒå–å¾—ãŸã‚ã®æº–å‚™
         pDevice->RequeueBuffer(pImage);
 
-        // ŠeŠp“x‚Ì•ÎŒõ‰æ‘œ‚Ìæ“¾
+        // å„è§’åº¦ã®åå…‰ç”»åƒã®å–å¾—
         cv::Mat angleImgs[4];
         GetPolarizedImages(orgImg, angleImgs);
 
-        // ‰æ‘œk¬
+        // ç”»åƒç¸®å°
         for (int i = 0; i < 4; i++)
             resize(angleImgs[i], angleImgs[i], cv::Size(), RESIZE_RATIO, RESIZE_RATIO);
 
-        // ‰‰ñƒ‹[ƒv‚Ì‚¾‚¯
+        // åˆå›ãƒ«ãƒ¼ãƒ—ã®æ™‚ã ã‘
         if (first) {
             int width = angleImgs[0].cols;
             int height = angleImgs[0].rows;
@@ -85,15 +85,15 @@ int main( int argc, char *argv[] )
         }
 
 
-        // OpenCV‚Å•\¦
+        // OpenCVã§è¡¨ç¤º
         cv::imshow("original", orgImg);
 
-        // ƒL[ˆ—
+        // ã‚­ãƒ¼å‡¦ç†
         int key = cv::waitKey(10);
         if (key == 'q' || key == 27)
             break;
 
-        // ‰‰ñƒ‹[ƒv‚Ìƒtƒ‰ƒO‚ğ~‚ë‚·
+        // åˆå›ãƒ«ãƒ¼ãƒ—ã®ãƒ•ãƒ©ã‚°ã‚’é™ã‚ã™
         first = false;
     }
 
@@ -108,7 +108,7 @@ int main( int argc, char *argv[] )
     pSystem->DestroyDevice(pDevice);
     Arena::CloseSystem(pSystem);
 
-    // OpenCV‚ÌƒEƒBƒ“ƒhƒE‚ğ‘S‚ÄŠJ•ú
+    // OpenCVã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å…¨ã¦é–‹æ”¾
     cv::destroyAllWindows();
 
 

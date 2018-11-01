@@ -12,10 +12,10 @@
 #include "ArenaApi.h"
 
 
-// IImage‚©‚çOpenCV‚ÌMat‚ğæ“¾‚·‚é
+// IImageã‹ã‚‰OpenCVã®Matã‚’å–å¾—ã™ã‚‹
 void GetMatFromIImage(Arena::IImage *src, cv::Mat& dst);
 
-// 4‚Â‚ÌŠp“x{0,45,90,135}‚Ì‰æ‘œ‚ğæ“¾‚·‚é
+// 4ã¤ã®è§’åº¦{0,45,90,135}ã®ç”»åƒã‚’å–å¾—ã™ã‚‹
 void GetPolarizedImages(cv::Mat& img, cv::Mat* imgs);
 
 #endif //__POLCAM_FUNCS_H__

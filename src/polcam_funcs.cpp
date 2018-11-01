@@ -8,17 +8,17 @@
 #include "polcam_funcs.h"
 
 
-// IImage‚©‚çOpenCV‚ÌMat‚ğæ“¾‚·‚é
+// IImageã‹ã‚‰OpenCVã®Matã‚’å–å¾—ã™ã‚‹
 void GetMatFromIImage(Arena::IImage *src, cv::Mat& dst)
 {
-    // ‰æ‘œƒf[ƒ^‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+    // ç”»åƒãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
     assert(src->HasImageData());
 
-    // ‚‚³‚Æ•
+    // é«˜ã•ã¨å¹…
     const int w = (int)src->GetWidth();
     const int h = (int)src->GetHeight();
 
-    // Mat‰æ‘œì¬
+    // Matç”»åƒä½œæˆ
     dst = cv::Mat(h, w, CV_8U);
     size_t bufSize = src->GetSizeOfBuffer();
     const uint8_t* pSrc = src->GetData();
@@ -26,26 +26,26 @@ void GetMatFromIImage(Arena::IImage *src, cv::Mat& dst)
 }
 
 
-// 4‚Â‚ÌŠp“x{0,45,90,135}‚Ì‰æ‘œ‚ğæ“¾‚·‚é
+// 4ã¤ã®è§’åº¦{0,45,90,135}ã®ç”»åƒã‚’å–å¾—ã™ã‚‹
 void GetPolarizedImages(cv::Mat& img, cv::Mat* imgs)
 {
-    // ‰æ‘œƒf[ƒ^‚ª‚ ‚é
+    // ç”»åƒãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹
     assert(!img.empty());
 
-    // ƒTƒCƒYƒ`ƒFƒbƒN
+    // ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯
     int h = img.rows;
     int w = img.cols;
     assert(h % 2 == 0 && w % 2 == 0);
 
-    // •ª‰ğ”\( ‚¢‚Ü‚Ì‚Æ‚±‚ë8bit‚Ì‚İ‘Î‰ )
+    // åˆ†è§£èƒ½( ã„ã¾ã®ã¨ã“ã‚8bitã®ã¿å¯¾å¿œ )
     assert(img.type() == CV_8U);
 
-    // •ª‰ğæ‚ÌMatì¬
+    // åˆ†è§£å…ˆã®Matä½œæˆ
     int h2 = h / 2, w2 = w / 2;
     for (int i = 0; i < 4; i++)
         imgs[i] = cv::Mat(h2, w2, CV_8U);
 
-    // ‚S‚Â‚É•ª‰ğ‚·‚é
+    // ï¼”ã¤ã«åˆ†è§£ã™ã‚‹
     const uint8_t* pData = img.data;
     for (int y = 0; y < h; y += 2) {
         for (int x = 0; x < w; x += 2) {
