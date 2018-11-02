@@ -5,6 +5,7 @@
 //
 
 
+#include <string>
 #include "imgproc.h"
 
 
@@ -641,7 +642,9 @@ void GetGammaBar(cv::Mat& dst, cv::Size size, double val, double min, double max
     cv::line(dst, cv::Point(pos, mgnH - 3), cv::Point(pos, mgnH + barH + 3), color, 3);
 
     // 数値キャプション描画
-    std::string valStr = std::_Floating_to_string("%.2f", val);
+    std::ostringstream oss;
+    oss << std::setprecision(2) << std::setiosflags(std::ios::fixed) << val;
+    std::string valStr = oss.str();
     const int fontface = cv::FONT_HERSHEY_TRIPLEX;
     const double fontscale = 0.3;
     const int thickness = 1;

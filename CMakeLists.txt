@@ -20,8 +20,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 # Compile for release
 set(CMAKE_BILD_TYPE Release)
 
-
+add_definitions("-std=c++11")
 find_package(OpenCV REQUIRED)
-add_executable(polcam ./src/polcam.cpp ./src/polcam_funcs.cpp)
+add_executable(polcam ./src/polcam.cpp ./src/imgproc.cpp)
 target_link_libraries( polcam arena gentl GCBase_gcc421_v3_0 GenApi_gcc421_v3_0 ${OpenCV_LIBRARIES})
 

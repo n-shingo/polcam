@@ -13,6 +13,9 @@
 #define RESIZE_RATIO 0.5
 #define USB_CAM_ID 0
 
+#define RESULT_W 1200
+#define RESULT_H 900
+
 int main( int argc, char *argv[] )
 {
     // Parameters
@@ -145,7 +148,7 @@ int main( int argc, char *argv[] )
 
         // すべて統合
         cv::Mat finalImg;
-        cv::Size size(aveImg.cols / 2, aveImg.rows / 2);
+        cv::Size size(RESULT_W, RESULT_H);
         if (mode == ShowMode::Average) {
             MakeAverageImage(aveImg, size, finalImg);
         }
@@ -159,7 +162,7 @@ int main( int argc, char *argv[] )
             MakeXoPLImage(xoLPImgs, size, finalImg, focus_gamma, gamma, th);
         }
         else {
-            size = cv::Size((int)(1.5 * size.width), (int)(1.5 * size.height));
+            //size = cv::Size((int)(1.5 * size.width), (int)(1.5 * size.height));
             MakeAllImage(aveImg, angleImgs, aStkImgs, xoLPImgs, size, finalImg, focus_gamma, gamma, th);
         }
 
