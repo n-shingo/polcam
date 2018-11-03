@@ -12,7 +12,7 @@
 
 #define TIMEOUT 2000      // 偏向カメラ画像取得のタイムアウト時間
 #define RESIZE_RATIO 0.5  // 画像処理を行う画像の倍率
-#define USB_CAM_ID 1      // USBカメラのID
+#define USB_CAM_ID 0      // USBカメラのID
 
 #define RESULT_W 1200   // 結果表示画像の幅
 #define RESULT_H 900    // 結果表示画像の高さ
@@ -178,6 +178,9 @@ int main( int argc, char *argv[] )
         }
         else {
             MakeAllImage(aveImg, angleImgs, aStkImgs, xoLPImgs, size, finalImg, focus_gamma, gamma, th);
+        }
+        if (isRecording) {
+            cv::circle(finalImg, cv::Point((int)(0.08*RESULT_W), (int)(0.08*RESULT_H)), (int)(0.04*RESULT_W), cv::Scalar(0, 0, 255), -1, CV_AA);
         }
 
 

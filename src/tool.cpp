@@ -68,14 +68,15 @@ bool makeDirectry(std::string dir)
 bool checkInterval(unsigned intvl_ms)
 {
     // 前回スタンプからの経過時間計算
-    static auto stamp_time = std::chrono::system_clock::now();
+    static std::chrono::system_clock::time_point stamp_time = std::chrono::system_clock::now();
     auto now = std::chrono::system_clock::now();
     auto dur = now - stamp_time;
     auto intvl = std::chrono::milliseconds(intvl_ms);
 
     // インターバルを経過している
     if (dur >= intvl) {
-        stamp_time = now - (dur - intvl);
+        //stamp_time = now - (dur - intvl);
+        stamp_time = now;
         return true;
     }
 
