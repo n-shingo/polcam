@@ -22,6 +22,6 @@ set(CMAKE_BILD_TYPE Release)
 
 add_definitions("-std=c++11")
 find_package(OpenCV REQUIRED)
-add_executable(polcam ./src/polcam.cpp ./src/imgproc.cpp)
+add_executable(polcam src/polcam.cpp src/imgproc.cpp src/tool.cpp)
 target_link_libraries( polcam arena gentl GCBase_gcc421_v3_0 GenApi_gcc421_v3_0 ${OpenCV_LIBRARIES})
 

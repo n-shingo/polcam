@@ -10,7 +10,13 @@
 #include <iomanip>
 #include <chrono>
 #include <time.h>
+
+#ifdef _WIN32
 #include <direct.h>
+#else
+#include <sys/stat.h>
+#endif
+
 #include "tool.h"
 
 // YYMMDD_hhmmss形式で現在の時刻の文字列を取得する
@@ -20,16 +26,21 @@ std::string getDateTimeStr(void)
 
     time_t t = time(NULL);
     struct tm tm;
-    localtime_s(&tm, &t);
+    struct tm * ptm = &tm;
+#ifdef _WIN32
+    localtime_s(ptm, &t);
+#else
+    ptm = localtime(&t);
+#endif
 
     std::ostringstream sout;
-    sout << std::to_string(tm.tm_year - 100); // 年
-    sout << std::setfill('0') << std::setw(2) << tm.tm_mon + 1;  // 月
-    sout << std::setfill('0') << std::setw(2) << tm.tm_mday; // 日
+    sout << std::to_string(ptm->tm_year - 100); // 年
+    sout << std::setfill('0') << std::setw(2) << ptm->tm_mon + 1;  // 月
+    sout << std::setfill('0') << std::setw(2) << ptm->tm_mday; // 日
     sout << "_";
-    sout << std::setfill('0') << std::setw(2) << tm.tm_hour; // 時
-    sout << std::setfill('0') << std::setw(2) << tm.tm_min; // 分
-    sout << std::setfill('0') << std::setw(2) << tm.tm_sec;  // 秒
+    sout << std::setfill('0') << std::setw(2) << ptm->tm_hour; // 時
+    sout << std::setfill('0') << std::setw(2) << ptm->tm_min; // 分
+    sout << std::setfill('0') << std::setw(2) << ptm->tm_sec;  // 秒
 
     return sout.str();
 }
@@ -39,14 +50,14 @@ std::string getDateTimeStr(void)
 bool makeDirectry(std::string dir)
 {
     // ディレクトリの作成
-    struct stat statBuf;
 #ifdef _WIN32
     _mkdir(dir.c_str());
-#elif
-    mkdir(dir.c_str());
+#else
+    mkdir(dir.c_str(), 0775);
 #endif
 
     // ディレクトリがあればtrueを返す
+    struct stat statBuf;
     if (stat(dir.c_str(), &statBuf) == 0)
         return true;
     else
